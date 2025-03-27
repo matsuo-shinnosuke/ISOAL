@@ -1,4 +1,3 @@
-/dataset
-/requirements.txt
-/result
-/src
+dataset/
+result/
+src/__pycache__
