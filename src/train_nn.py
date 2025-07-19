@@ -35,7 +35,8 @@ def train(
     best_val_acc = 0.0
     train_loss, val_loss = AverageMeter(), AverageMeter()
 
-    for epoch in tqdm(range(num_epochs), leave=False, ncols=50):
+    # for epoch in tqdm(range(num_epochs), leave=False, ncols=50):
+    for epoch in range(num_epochs):
         # ---- Train ----
         model.train()
         pred, gt = [], []
@@ -59,8 +60,6 @@ def train(
         gt, pred = np.array(gt), np.array(pred)
         train_acc = accuracy_score(gt, pred)
         history_train_acc_full.append(train_acc*100)
-        
-        train_loss.reset()
 
         # ---- Validation ----
         model.eval()
@@ -81,10 +80,16 @@ def train(
         gt, pred = np.array(gt), np.array(pred)
         val_acc = accuracy_score(gt, pred)
 
+        print('[Epoch %d/%d] train loss: %.3f, acc: %.2f, val loss: %.3f, acc: %.2f'%(
+            epoch+1, num_epochs, train_loss.avg, train_acc*100, val_loss.avg, val_acc*100,
+        ))
+
         if val_acc*100 >= best_val_acc:
             best_val_acc = val_acc*100
             best_model_param = copy.deepcopy(model.state_dict())
+            print('Update model weight')
 
+        train_loss.reset()
         val_loss.reset()
     
     model.load_state_dict(best_model_param)
@@ -100,7 +105,8 @@ def train(
     best_val_acc = 0.0
     train_loss, val_loss = AverageMeter(), AverageMeter()
 
-    for epoch in tqdm(range(num_epochs), leave=False, ncols=50):
+    # for epoch in tqdm(range(num_epochs), leave=False, ncols=50):
+    for epoch in range(num_epochs):
         # ---- Train ----
         model.train()
         pred, gt = [], []
@@ -124,8 +130,6 @@ def train(
         gt, pred = np.array(gt), np.array(pred)
         train_acc = accuracy_score(gt, pred)
         history_train_acc_full.append(train_acc*100)
-        
-        train_loss.reset()
 
         # ---- Validation ----
         model.eval()
@@ -146,10 +150,16 @@ def train(
         gt, pred = np.array(gt), np.array(pred)
         val_acc = accuracy_score(gt, pred)
 
+        print('[Epoch %d/%d] train loss: %.3f, acc: %.2f, val loss: %.3f, acc: %.2f'%(
+            epoch+1, num_epochs, train_loss.avg, train_acc*100, val_loss.avg, val_acc*100,
+        ))
+
         if val_acc*100 >= best_val_acc:
             best_val_acc = val_acc*100
             best_model_param = copy.deepcopy(model.state_dict())
-
+            print('Update model weight')
+        
+        train_loss.reset()
         val_loss.reset()
 
     model.load_state_dict(best_model_param)

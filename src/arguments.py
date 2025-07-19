@@ -14,7 +14,7 @@ def parse_option():
                                  'efficientnetv2', 'vit_b_16', 'convnext_b'])
     parser.add_argument('--optimizer', default='adam', type=str, 
                         choices=['sgd','adam'])
-    parser.add_argument('--lr', default=0.001, type=float)
+    parser.add_argument('--lr', default=1e-4, type=float)
     parser.add_argument('--num_epochs', default=50, type=int)
     parser.add_argument('--output_dir', default='result/', type=str)
 

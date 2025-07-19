@@ -74,10 +74,11 @@ def set_train_loader(X, y, load_index, image_size, batch_size=128, num_workers=4
     train_transforms = transforms.Compose([
         transforms.ToPILImage(),
         transforms.Resize(image_size),
-        transforms.RandomCrop(image_size, padding=4),
+        transforms.RandomCrop(image_size, padding=image_size//8),
         transforms.RandomHorizontalFlip(),
+        transforms.RandAugment(num_ops=2, magnitude=9),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
     ])
     train_dataset = Dataset(X=X, y=y, load_index=load_index, transform=train_transforms)
     train_loader = torch.utils.data.DataLoader(
@@ -89,7 +90,7 @@ def set_test_loader(X, y, image_size, batch_size=128, num_workers=4):
         transforms.ToPILImage(),
         transforms.Resize(image_size),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
     ])
     test_dataset = Dataset(X=X, y=y, load_index=np.arange(len(X)), transform=test_transforms)
     test_loader = torch.utils.data.DataLoader(
