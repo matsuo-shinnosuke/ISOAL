@@ -7,7 +7,7 @@ from tqdm import tqdm
 from torchvision.datasets.utils import download_file_from_google_drive
 from torchvision import transforms
 
-root = './dataset/cub'
+root = '../ISO_PR/dataset/cub'
 base_folder = 'CUB_200_2011/images'
 file_id = '1hbzc_P1FuxMkcabkgn9ZKinBwW683j45'
 filename = 'CUB_200_2011.tgz'
