@@ -9,17 +9,22 @@ def parse_option():
     parser.add_argument('--device', default='cuda:0', type=str)
     parser.add_argument('--batch_size', default=128, type=int)
     parser.add_argument('--num_workers', default=4, type=int)
-    parser.add_argument('--model_backbone', default='resnet18', type=str, choices=['resnet18', 'resnet50'])
-    parser.add_argument('--optimizer', default='adam', type=str, choices=['sgd','adam'])
+    parser.add_argument('--model_backbone', default='resnet18', type=str, 
+                        choices=['resnet18', 'resnet34', 'resnet50', 
+                                 'efficientnetv2', 'vit_b_16', 'convnext_b'])
+    parser.add_argument('--optimizer', default='adam', type=str, 
+                        choices=['sgd','adam'])
     parser.add_argument('--lr', default=0.001, type=float)
     parser.add_argument('--num_epochs', default=50, type=int)
     parser.add_argument('--output_dir', default='result/', type=str)
 
-    parser.add_argument('--dataset', default='cifar100', type=str, choices=['cifar100', 'cub200'])
-    parser.add_argument('--uncertainty', default='margin', type=str,  choices=['ent', 'max_conf', 'margin'])
+    parser.add_argument('--dataset', default='cifar100', type=str, 
+                        choices=['cifar100', 'cub200'])
+    parser.add_argument('--uncertainty', default='margin', type=str,  
+                        choices=['ent', 'max_conf', 'margin'])
     parser.add_argument('--num_rounds', default=5, type=int)
-    # parser.add_argument('--budget', default=1000, type=int)
     parser.add_argument('--cost_weak', default=0.5, type=float) # cost_full=1.0
+    # parser.add_argument('--budget', default=1000, type=int)
 
     args = parser.parse_args()
 

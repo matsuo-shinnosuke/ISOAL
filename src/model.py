@@ -1,14 +1,17 @@
 import torch
 import torch.nn as nn
 import numpy as np
-from torchvision.models import resnet18, resnet34, resnet50, ResNet18_Weights, ResNet34_Weights, ResNet50_Weights
+import timm
 
 model_dict = {
-    'resnet18': [lambda: nn.Sequential(*list(resnet18(weights=ResNet18_Weights.DEFAULT).children())[:-1], nn.Flatten()), 512],
-    'resnet34': [lambda: nn.Sequential(*list(resnet34(weights=ResNet34_Weights.DEFAULT).children())[:-1], nn.Flatten()), 512],
-    'resnet50': [lambda: nn.Sequential(*list(resnet50(weights=ResNet50_Weights.DEFAULT).children())[:-1], nn.Flatten()), 2048],
+    'resnet18': [lambda: nn.Sequential(timm.create_model('resnet18', pretrained=True, num_classes=0), nn.Flatten()), 512],
+    'resnet34': [lambda: nn.Sequential(timm.create_model('resnet34', pretrained=True, num_classes=0), nn.Flatten()), 512],
+    'resnet50': [lambda: nn.Sequential(timm.create_model('resnet50', pretrained=True, num_classes=0), nn.Flatten()), 2048],
+    'efficientnetv2': [lambda: nn.Sequential(timm.create_model('tf_efficientnetv2_b0', pretrained=True, num_classes=0), nn.Flatten()), 1280],
+    'vit_b_16': [lambda: nn.Sequential(timm.create_model('vit_base_patch16_224', pretrained=True, num_classes=0), nn.Flatten()), 768],
+    'convnext_b': [lambda: nn.Sequential(timm.create_model('convnext_base', pretrained=True, num_classes=0), nn.Flatten()), 1024],
 }
-
+    
 class Model(nn.Module):
     def __init__(self, model_backbone, num_classes, num_super_classes):
         super(Model, self).__init__()
